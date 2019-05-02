@@ -4,9 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/signing.php" description="$output = shell_exec('ls -lart');" line="2" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9bbb3b0-35d2-492a-a82a-5bb88dbe687c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
-    </list>
+    <list default="true" id="b9bbb3b0-35d2-492a-a82a-5bb88dbe687c" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -113,8 +111,9 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="821" />
-    <option name="width" value="1106" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="974" />
     <option name="height" value="1047" />
   </component>
   <component name="ProjectView">
