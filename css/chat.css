@@ -1,0 +1,248 @@
+.margeDivChat {
+
+    margin-top: 4px;
+
+    height: 100%;
+
+    border: 1px solid black;
+
+    border-radius: 5%;
+
+    overflow: auto;
+
+    margin-left: 2%;
+
+    margin-right: 2%;
+
+}
+
+
+
+
+
+
+
+.divDuChat {
+
+    border: 1px solid black;
+
+    border-radius: 20px;
+
+    height: 100%;
+
+}
+
+
+
+.divWrite {
+
+    border-top: 1px solid black;
+
+    margin-bottom: 10px;
+
+}
+
+
+
+
+
+.imgConv {
+
+    width: 20%;
+
+    float: left;
+
+}
+
+
+
+.colorName {
+
+    color: #bc272b;
+
+}
+
+
+
+.colorName > a:hover {
+
+    color: #bc272b;
+
+}
+
+
+
+.divChat {
+
+    overflow: auto;
+
+    height: 70%;
+
+    margin-top: 2px;
+
+    border: 1px solid black;
+
+    border-radius: 20px;
+
+   
+
+
+}
+
+
+
+.nomChat {
+
+    border-bottom: 1px solid black;
+
+}
+
+
+
+.textareaChat{
+
+    border: none;
+
+}
+
+
+
+.conversation {
+
+    margin-bottom: 1%;
+
+    padding-top: 10px;
+
+    border-top: 1px solid white;
+
+    margin-left: 3px;
+
+}
+
+
+
+.messageDroite {
+
+    margin-bottom: 1px;
+
+    border-radius: 8px;
+
+    padding: 8px 12px;
+
+    overflow: hidden;
+
+    display: inline-block;
+
+    clear: both;
+
+    float: right;
+
+    background-color: #D8D8D8;
+
+
+
+}
+
+
+
+.messageGauche {
+
+    margin-bottom: 1px;
+
+    border-radius: 8px;
+
+    padding: 8px 12px;
+
+    background-color: #d3e0dd;
+
+    overflow: hidden;
+
+    display: inline-block;
+
+    clear: both;
+
+    float: left;
+
+
+
+}
+
+
+
+.imageChat {
+
+    width: 40px;
+
+    margin-right: 8px;
+
+    float: left;
+
+    float: left;
+
+}
+
+
+
+.imagetoi {
+
+    width: 40px;
+
+    margin-left: 8px;
+
+    float: right;
+
+
+
+}
+
+
+
+.blocMessageGauche {
+
+    margin-top: 2px;
+
+    margin-bottom: 1px;
+
+    border-radius: 8px;
+
+    padding: 8px 12px;
+
+    overflow: hidden;
+
+    display: inline-block;
+
+    clear: both;
+
+    float: left;
+
+}
+
+
+
+.blocMessageDroite {
+
+    margin-top: 2px;
+
+    margin-bottom: 1px;
+
+    border-radius: 8px;
+
+    padding: 8px 12px;
+
+    overflow: hidden;
+
+    display: inline-block;
+
+    clear: both;
+
+    float: right;
+
+}
+
+
+
+.divImageChat {
+
+    margin-top: 2px;
+
+}
