@@ -46,14 +46,14 @@
         ));
         $personne = $pers->fetch();
         if ($personne['admin'] == 1) {
-            $cert = $bdd->prepare('SELECT path_certificate, nom, prenom, state_certificate FROM certificates INNER JOIN personne ON personne.id = certificates.id_demandeur');
-            $real_cert = $bdd->prepare('SELECT path_real_certificate, nom, prenom, state_real_certificate FROM real_certificates INNER JOIN personne ON personne.id = real_certificates.id_demandeur');
+            $cert = $bdd->prepare('SELECT path_certificate, nom, prenom, state_certificate, fqdn_certificate FROM certificates INNER JOIN personne ON personne.id = certificates.id_demandeur');
+            $real_cert = $bdd->prepare('SELECT path_real_certificate, nom, prenom, state_real_certificate, fqdn_real_certificate FROM real_certificates INNER JOIN personne ON personne.id = real_certificates.id_demandeur');
 
             $real_cert->execute();
             $cert->execute();
         } else {
-            $cert = $bdd->prepare('SELECT path_certificate, nom, prenom, state_certificate FROM certificates INNER JOIN personne ON personne.id = certificates.id_demandeur WHERE id = :id');
-            $real_cert = $bdd->prepare('SELECT path_real_certificate, nom, prenom, state_real_certificate FROM real_certificates INNER JOIN personne ON personne.id = real_certificates.id_demandeur WHERE id = :id');
+            $cert = $bdd->prepare('SELECT path_certificate, nom, prenom, state_certificate, fqdn_certificate FROM certificates INNER JOIN personne ON personne.id = certificates.id_demandeur WHERE id = :id');
+            $real_cert = $bdd->prepare('SELECT path_real_certificate, nom, prenom, state_real_certificate, fqdn_real_certificate FROM real_certificates INNER JOIN personne ON personne.id = real_certificates.id_demandeur WHERE id = :id');
 
             $cert->execute(array(
                 'id' => $_SESSION['id']
@@ -127,6 +127,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>Nom de la demande</th>
+                                                    <th>FQDN</th>
                                                     <th>Nom du demandeur</th>
                                                     <th>Prénom du demandeur</th>
                                                     <th>Statut</th>
@@ -139,8 +140,9 @@
                                                     ?>
                                                     <tr>
                                                         <td class="col-md-3"><strong><?php echo $lesCerts['path_certificate'] ?></strong></td>
-                                                        <td class="col-md-3"><?php echo $lesCerts['nom']?></td>
-                                                        <td class="col-md-3"><?php echo $lesCerts['prenom']?></td>
+                                                        <td class="col-md-2"><?php echo $lesCerts['fqdn_certificate']?></td>
+                                                        <td class="col-md-2"><?php echo $lesCerts['nom']?></td>
+                                                        <td class="col-md-2"><?php echo $lesCerts['prenom']?></td>
                                                         <td class="col-md-2">
                                                             <?php
                                                                 if ($lesCerts['state_certificate'] == 0) {
@@ -186,6 +188,7 @@
                                             <thead>
                                             <tr>
                                                 <th>Nom du certificat</th>
+                                                <th>FQDN</th>
                                                 <th>Nom du détenteur</th>
                                                 <th>Prénom du détenteur</th>
                                                 <th>Statut</th>
@@ -198,8 +201,9 @@
                                                 ?>
                                                 <tr>
                                                     <td class="col-md-3"><strong><?php echo $certifs['path_real_certificate'] ?></strong></td>
-                                                    <td class="col-md-3"><?php echo $certifs['nom']?></td>
-                                                    <td class="col-md-3"><?php echo $certifs['prenom']?></td>
+                                                    <td class="col-md-2"><?php echo $certifs['fqdn_real_certificate']?></td>
+                                                    <td class="col-md-2"><?php echo $certifs['nom']?></td>
+                                                    <td class="col-md-2"><?php echo $certifs['prenom']?></td>
                                                     <td class="col-md-2">
                                                         <?php
                                                         if ($certifs['state_real_certificate'] == 0) {
