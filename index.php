@@ -137,7 +137,7 @@
                                                     <td><strong><?php echo $lesCerts['path_certificate'] ?></strong></td>
                                                     <td><?php echo $lesCerts['nom']?></td>
                                                     <td><?php echo $lesCerts['prenom']?></td>
-                                                    <td><button><a href="signing.php?csr=request/<?php echo $lesCerts['path_certificate']?>">Accepter</a></button></td>
+                                                    <td><button><a href="signing.php?csr=<?php echo $lesCerts['path_certificate']?>">Accepter</a></button></td>
                                                     <td>
                                                         <span class="label label-success">
                                                              <?php

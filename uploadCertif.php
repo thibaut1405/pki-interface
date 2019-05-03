@@ -49,19 +49,8 @@ if (!isset($erreur)) //S'il n'y a pas d'erreur, on upload
 
     $lefichierSplit = mb_split(" ", $fichier, -1);
 
-    $name =  $_FILES['file']['tmp_name']."_".$fichier;
 
-    $name =  strtr($name,
-
-        'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ',
-
-        'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
-
-    $name = str_replace("/", '_', $name);
-
-    var_dump($name);
-
-    if (move_uploaded_file($_FILES['file']['tmp_name'], $dossier . $name)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
+    if (move_uploaded_file($_FILES['file']['tmp_name'], $dossier . $fichier)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
 
     {
 
@@ -69,11 +58,12 @@ if (!isset($erreur)) //S'il n'y a pas d'erreur, on upload
 
         $createCert->execute(array(
 
-            'path' => $name,
+            'path' => $fichier,
 
             'idPersonne' => $_SESSION['id']
         ));
 
+        shell_exec("sudo -u root /bin/bash /root/pki/csr '".$_POST['fqdn']."' '".$fichier."'2>&1");
 
         echo 'Upload effectué avec succès !';
 
@@ -83,6 +73,7 @@ if (!isset($erreur)) //S'il n'y a pas d'erreur, on upload
     } else //Sinon (la fonction renvoie FALSE).
 
     {
+        var_dump($_FILES);
 
         echo 'Echec de l\'upload !';
 
