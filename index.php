@@ -197,18 +197,6 @@
                                             while ($certifs = $real_cert->fetch()) {
                                                 ?>
                                                 <tr>
-<<<<<<< HEAD
-                                                    <td><strong><?php echo $lesCerts['path_certificate'] ?></strong></td>
-                                                    <td><?php echo $lesCerts['nom']?></td>
-                                                    <td><?php echo $lesCerts['prenom']?></td>
-                                                    <td><button><a href="signing.php?csr=<?php echo $lesCerts['path_certificate']?>">Accepter</a></button></td>
-                                                    <td>
-                                                        <span class="label label-success">
-                                                             <?php
-
-                                                             ?>
-                                                        </span>
-=======
                                                     <td class="col-md-3"><strong><?php echo $certifs['path_real_certificate'] ?></strong></td>
                                                     <td class="col-md-3"><?php echo $certifs['nom']?></td>
                                                     <td class="col-md-3"><?php echo $certifs['prenom']?></td>
