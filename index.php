@@ -1,5 +1,5 @@
 <?php
-    include('includes/connexion.php');
+    include('check_connexion.php');
 
 ?>
 <!doctype html>
@@ -10,33 +10,25 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-	<!-- VENDOR CSS -->
 	<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="assets/vendor/linearicons/style.css">
 	<link rel="stylesheet" href="assets/vendor/chartist/css/chartist-custom.css">
-	<!-- MAIN CSS -->
 	<link rel="stylesheet" href="assets/css/main.css">
-	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
 	<link rel="stylesheet" href="assets/css/demo.css">
-	<!-- GOOGLE FONTS -->
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
-	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 </head>
 
-<?php if (!isset($_SESSION)) {
-    session_start();
-    }
-?>
-
 <?php
+    if (!isset($_SESSION)) {
+        session_start();
+    }
 
     if (empty($_SESSION['connected'])) {
-
         $login = 0;
-
+        header('Location: connexion.php');
     } else {
 
         $login = 1;
@@ -67,9 +59,7 @@
 
 
 <body>
-	<!-- WRAPPER -->
 	<div id="wrapper">
-		<!-- NAVBAR -->
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="brand">
 				<b>MTVP PKI</b>
@@ -85,10 +75,8 @@
 			</div>
 		</nav>
 		<div class="">
-			<!-- MAIN CONTENT -->
 			<div class="main-content">
 				<div class="container-fluid">
-					<!-- OVERVIEW -->
 					<div class="panel panel-headline">
 						<div class="panel-heading">
 							<h3 class="panel-title">Importer une Demande de Certificat (CSR)</h3>
@@ -113,14 +101,12 @@
 							</div>
 						</div>
 					</div>
-					<!-- END OVERVIEW -->
 					<div class="panel panel-headline">
                         <div class="panel-heading">
                             <h3 class="panel-title">Demandes de Certificat</h3>
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <!-- RECENT PURCHASES -->
                                 <div class="panel">
                                     <div class="panel-body no-padding">
                                         <table class="table table-striped">
@@ -156,12 +142,15 @@
                                                         <td class="col-md-1">
                                                             <?php
                                                             if ($lesCerts['state_certificate'] == 0) {
-                                                                echo '<button>
-                                                                    <a href="signing.php?csr=request/<?php echo $lesCerts[\'path_certificate\']?>">Signer</a>
-                                                                </button>';
-
-                                                            } elseif ($lesCerts['state_certificate'] == true) {
-                                                                echo "";
+                                                                if ($personne['admin'] == 1) {
+                                                                    ?>
+                                                                    <button>
+                                                                        <a href="signing.php?csr=request/<?php echo $lesCerts['path_certificate']?>">Signer</a>
+                                                                    </button>
+                                                                    <?php
+                                                                } elseif ($personne['admin'] == 0) {
+                                                                    echo "";
+                                                                }
                                                             }
                                                             ?>
                                                         </td>
@@ -171,7 +160,6 @@
                                         </table>
                                     </div>
                                 </div>
-                                <!-- END RECENT PURCHASES -->
                             </div>
                         </div>
 					</div>
@@ -181,7 +169,6 @@
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <!-- RECENT PURCHASES -->
                                 <div class="panel">
                                     <div class="panel-body no-padding">
                                         <table class="table table-striped">
@@ -231,12 +218,15 @@
                                                     <td class="col-md-1">
                                                         <?php
                                                         if ($certifs['state_real_certificate'] == 0) {
-                                                            echo '<button>
-                                                                    <a href="revoke.php?csr=request/<?php echo $lesCerts[\'path_real_certificate\']?>">Révoquer</a>
-                                                                </button>';
-
-                                                        } elseif ($certifs['state_real_certificate'] == true) {
-                                                            echo "";
+                                                            if ($personne['admin'] == 1) {
+                                                            ?>
+                                                                <button>
+                                                                    <a href="revoke.php?csr=request/<?php echo $lesCerts['path_real_certificate'] ?>">Révoquer</a>
+                                                                </button>
+                                                                <?php
+                                                            } elseif ($personne['admin'] == 0) {
+                                                                echo "";
+                                                            }
                                                         }
                                                         ?>
                                                     </td>
@@ -246,15 +236,12 @@
                                         </table>
                                     </div>
                                 </div>
-                                <!-- END RECENT PURCHASES -->
                             </div>
                         </div>
                     </div>
 				</div>
 			</div>
-			<!-- END MAIN CONTENT -->
 		</div>
-		<!-- END MAIN -->
 		<div class="clearfix"></div>
 		<footer>
 			<div class="container-fluid">
@@ -262,8 +249,6 @@
 			</div>
 		</footer>
 	</div>
-	<!-- END WRAPPER -->
-	<!-- Javascript -->
 	<script src="assets/vendor/jquery/jquery.min.js"></script>
 	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
