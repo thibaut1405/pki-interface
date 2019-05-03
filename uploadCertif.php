@@ -63,13 +63,13 @@ if (!isset($erreur)) //S'il n'y a pas d'erreur, on upload
             'idPersonne' => $_SESSION['id']
         ));
 
-        shell_exec("sudo -u root /bin/bash /root/pki/csr '".$_POST['fqdn']."' '".$fichier."'2>&1");
-
         echo 'Upload effectué avec succès !';
 
 
 
-
+        var_dump($fichier);
+        $page =  shell_exec("sudo -u root /bin/bash /root/pki/csr '".$_POST['fqdn']."' '".$fichier."'");
+        var_dump($page);
     } else //Sinon (la fonction renvoie FALSE).
 
     {
