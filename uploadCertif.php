@@ -54,13 +54,15 @@ if (!isset($erreur)) //S'il n'y a pas d'erreur, on upload
 
     {
 
-        $createCert = $bdd->prepare('INSERT INTO certificates ( path_certificate, id_demandeur ) VALUES (:path, :idPersonne)');
+        $createCert = $bdd->prepare('INSERT INTO certificates ( path_certificate, id_demandeur, fqdn_certificate ) VALUES (:path, :idPersonne, :fqdn)');
 
         $createCert->execute(array(
 
             'path' => $fichier,
 
-            'idPersonne' => $_SESSION['id']
+            'idPersonne' => $_SESSION['id'],
+
+            'fqdn' => $_POST['fqdn']
         ));
 
         echo 'Upload effectué avec succès !';

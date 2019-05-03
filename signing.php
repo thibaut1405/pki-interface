@@ -1,9 +1,8 @@
 <?php
 
-$csrdata = $_GET["csr"];
-$fqdn = "test.fr";
+$fqdn = $_GET["fqdn"];
 
-
-$page = shell_exec("sudo -u root /bin/bash /root/pki/csr '".$fqdn."' '".$csrdata."'2>&1");
+var_dump($fqdn);
+$page = shell_exec("sudo -u root /root/pki/issue test.fr");
 
 var_dump($page);
