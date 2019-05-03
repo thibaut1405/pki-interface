@@ -46,13 +46,19 @@
         ));
         $personne = $pers->fetch();
         if ($personne['admin'] == 1) {
-            $cert = $bdd->prepare('SELECT path_certificate, nom, prenom FROM certificates INNER JOIN personne ON personne.id = certificates.id_demandeur');
+            $cert = $bdd->prepare('SELECT path_certificate, nom, prenom, state_certificate FROM certificates INNER JOIN personne ON personne.id = certificates.id_demandeur');
+            $real_cert = $bdd->prepare('SELECT path_real_certificate, nom, prenom, state_real_certificate FROM real_certificates INNER JOIN personne ON personne.id = real_certificates.id_demandeur');
 
+            $real_cert->execute();
             $cert->execute();
         } else {
-            $cert = $bdd->prepare('SELECT path_certificate, nom, prenom FROM certificates INNER JOIN personne ON personne.id = certificates.id_demandeur WHERE id = :id');
+            $cert = $bdd->prepare('SELECT path_certificate, nom, prenom, state_certificate FROM certificates INNER JOIN personne ON personne.id = certificates.id_demandeur WHERE id = :id');
+            $real_cert = $bdd->prepare('SELECT path_real_certificate, nom, prenom, state_real_certificate FROM real_certificates INNER JOIN personne ON personne.id = real_certificates.id_demandeur WHERE id = :id');
 
             $cert->execute(array(
+                'id' => $_SESSION['id']
+            ));
+            $real_cert->execute(array(
                 'id' => $_SESSION['id']
             ));
         }
@@ -89,10 +95,11 @@
 						</div>
 						<div class="panel-body">
 							<div class="row">
-								<div class="col-md-6">
+								<div class="col-md-5">
                                     <form method="post" action="uploadCertif.php" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <input type="file" class="form-control" name="file" required>
+                                            <br>
                                             <span class="form-control" >
                                                 <span>FQDN : </span>
                                                 <input type="text" name="fqdn" placeholder="exemple.fr" required>
@@ -107,53 +114,124 @@
 						</div>
 					</div>
 					<!-- END OVERVIEW -->
-					<div class="row">
-						<div class="col-md-12">
-							<!-- RECENT PURCHASES -->
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Demandes de Certificats</h3>
-									<div class="right">
-										<button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
-										<button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
-									</div>
-								</div>
-								<div class="panel-body no-padding">
-									<table class="table table-striped">
-										<thead>
-											<tr>
-												<th>Nom du certificat</th>
-												<th>Nom du demandeur</th>
-												<th>Prénom du demandeur</th>
-                                                <th>Accepter</th>
-												<th>Statut</th>
-											</tr>
-										</thead>
-										<tbody>
+					<div class="panel panel-headline">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Demandes de Certificat</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <!-- RECENT PURCHASES -->
+                                <div class="panel">
+                                    <div class="panel-body no-padding">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nom de la demande</th>
+                                                    <th>Nom du demandeur</th>
+                                                    <th>Prénom du demandeur</th>
+                                                    <th>Statut</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                while ($lesCerts = $cert->fetch()) {
+                                                    ?>
+                                                    <tr>
+                                                        <td class="col-md-3"><strong><?php echo $lesCerts['path_certificate'] ?></strong></td>
+                                                        <td class="col-md-3"><?php echo $lesCerts['nom']?></td>
+                                                        <td class="col-md-3"><?php echo $lesCerts['prenom']?></td>
+                                                        <td class="col-md-2">
+                                                            <?php
+                                                                if ($lesCerts['state_certificate'] == 0) {
+                                                                    echo "<span class='label label-info'>En attente</span>";
+
+                                                                } elseif ($lesCerts['state_certificate'] == true) {
+                                                                    echo "<span class='label label-success'>Acceptée</span>";
+                                                                }
+                                                            ?>
+                                                        </td>
+                                                        <td class="col-md-1">
+                                                            <?php
+                                                            if ($lesCerts['state_certificate'] == 0) {
+                                                                echo '<button>
+                                                                    <a href="signing.php?csr=request/<?php echo $lesCerts[\'path_certificate\']?>">Signer</a>
+                                                                </button>';
+
+                                                            } elseif ($lesCerts['state_certificate'] == true) {
+                                                                echo "";
+                                                            }
+                                                            ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- END RECENT PURCHASES -->
+                            </div>
+                        </div>
+					</div>
+                    <div class="panel panel-headline">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Liste des Certificats</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <!-- RECENT PURCHASES -->
+                                <div class="panel">
+                                    <div class="panel-body no-padding">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Nom du certificat</th>
+                                                <th>Nom du détenteur</th>
+                                                <th>Prénom du détenteur</th>
+                                                <th>Statut</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
                                             <?php
-                                            while ($lesCerts = $cert->fetch()) {
+                                            while ($certifs = $real_cert->fetch()) {
                                                 ?>
                                                 <tr>
-                                                    <td><strong><?php echo $lesCerts['path_certificate'] ?></strong></td>
-                                                    <td><?php echo $lesCerts['nom']?></td>
-                                                    <td><?php echo $lesCerts['prenom']?></td>
-                                                    <td><button><a href="signing.php?csr=request/<?php echo $lesCerts['path_certificate']?>">Accepter</a></button></td>
-                                                    <td>
-                                                        <span class="label label-success">
-                                                             <?php
+                                                    <td class="col-md-3"><strong><?php echo $certifs['path_real_certificate'] ?></strong></td>
+                                                    <td class="col-md-3"><?php echo $certifs['nom']?></td>
+                                                    <td class="col-md-3"><?php echo $certifs['prenom']?></td>
+                                                    <td class="col-md-2">
+                                                        <?php
+                                                        if ($certifs['state_real_certificate'] == 0) {
+                                                            echo "<span class='label label-success'>Valide</span>";
 
-                                                             ?>
-                                                        </span>
+                                                        } elseif ($certifs['state_real_certificate'] == true) {
+                                                            echo "<span class='label label-danger'>Révoqué</span>";
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td class="col-md-1">
+                                                        <?php
+                                                        if ($certifs['state_real_certificate'] == 0) {
+                                                            echo '<button>
+                                                                    <a href="revoke.php?csr=request/<?php echo $lesCerts[\'path_real_certificate\']?>">Révoquer</a>
+                                                                </button>';
+
+                                                        } elseif ($certifs['state_real_certificate'] == true) {
+                                                            echo "";
+                                                        }
+                                                        ?>
                                                     </td>
                                                 </tr>
                                             <?php } ?>
-										</tbody>
-									</table>
-								</div>
-							</div>
-							<!-- END RECENT PURCHASES -->
-						</div>
-					</div>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- END RECENT PURCHASES -->
+                            </div>
+                        </div>
+                    </div>
 				</div>
 			</div>
 			<!-- END MAIN CONTENT -->
