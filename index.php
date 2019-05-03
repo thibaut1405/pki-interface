@@ -193,6 +193,7 @@
                                                 <th>Prénom du détenteur</th>
                                                 <th>Statut</th>
                                                 <th></th>
+                                                <th></th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -204,7 +205,7 @@
                                                     <td class="col-md-2"><?php echo $certifs['fqdn_real_certificate']?></td>
                                                     <td class="col-md-2"><?php echo $certifs['nom']?></td>
                                                     <td class="col-md-2"><?php echo $certifs['prenom']?></td>
-                                                    <td class="col-md-2">
+                                                    <td class="col-md-1">
                                                         <?php
                                                         if ($certifs['state_real_certificate'] == 0) {
                                                             echo "<span class='label label-success'>Valide</span>";
@@ -212,6 +213,19 @@
                                                         } elseif ($certifs['state_real_certificate'] == true) {
                                                             echo "<span class='label label-danger'>Révoqué</span>";
                                                         }
+                                                        ?>
+                                                    </td>
+                                                    <td class="col-md-1">
+                                                        <?php
+                                                            if ($certifs['state_real_certificate'] == 0) {
+                                                        ?>
+                                                            <button>
+                                                                <a href="/root/pki/certs/<?php echo $certifs['fqdn_real_certificate']?>/<?php echo $certifs['fqdn_real_certificate']?>.crt">Télécharger</a>
+                                                            </button>
+                                                        <?php
+                                                            } elseif ($certifs['state_real_certificate'] == true) {
+                                                                echo "";
+                                                            }
                                                         ?>
                                                     </td>
                                                     <td class="col-md-1">
@@ -225,7 +239,6 @@
                                                             echo "";
                                                         }
                                                         ?>
-
                                                     </td>
                                                 </tr>
                                             <?php } ?>
