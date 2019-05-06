@@ -68,15 +68,10 @@ if (!isset($erreur)) //S'il n'y a pas d'erreur, on upload
         echo 'Upload effectué avec succès !';
 
 
-
-        var_dump($fichier);
         $page =  shell_exec("sudo -u root /bin/bash /root/pki/csr '".$_POST['fqdn']."' '".$fichier."'");
-        var_dump($page);
     } else //Sinon (la fonction renvoie FALSE).
 
     {
-        var_dump($_FILES);
-
         echo 'Echec de l\'upload !';
 
 

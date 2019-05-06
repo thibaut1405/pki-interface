@@ -160,6 +160,10 @@ if (empty($_SESSION['connected'])) {
                                                         <button>
                                                             <a href="signing.php?fqdn=<?php echo $lesCerts['fqdn_certificate'] ?>">Signer</a>
                                                         </button>
+
+                                                        <button>
+                                                            <a href="verifyCSR.php?fqdn=<?php echo $lesCerts['fqdn_certificate'] ?>">Vérifier</a>
+                                                        </button>
                                                         <?php
                                                     } elseif ($lesCerts['state_certificate'] == true) {
                                                         echo "";
@@ -220,10 +224,11 @@ if (empty($_SESSION['connected'])) {
                                                 <td class="col-md-1">
                                                     <?php
                                                     if ($certifs['state_real_certificate'] == 0) {
-                                                        echo '<button>
-                                                                    <a href="revoke.php?csr=">Révoquer</a>
-                                                                </button>';
-
+                                                        ?>
+                                                        <button>
+                                                            <a href="revoke.php?fqdn=<?php echo $certifs['fqdn_real_certificate'] ?>">Révoquer</a>
+                                                        </button>
+                                                        <?php
                                                     } elseif ($certifs['state_real_certificate'] == true) {
                                                         echo "";
                                                     }
