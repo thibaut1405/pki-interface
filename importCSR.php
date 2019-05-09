@@ -84,8 +84,8 @@
             <div class="sidebar-scroll">
                 <nav>
                     <ul class="nav">
-                        <li><a href="index.php" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
-                        <li><a href="importCSR.php" class=""><i class="lnr lnr-download"></i> <span>Importer CSR</span></a></li>
+                        <li><a href="index.php" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+                        <li><a href="importCSR.php" class="active"><i class="lnr lnr-download"></i> <span>Importer CSR</span></a></li>
                         <li><a href="listeCSR.php" class=""><i class="lnr lnr-list"></i> <span>Lister CSR</span></a></li>
                         <?php if ($personne['admin'] == 1) {
                             ?>
@@ -109,53 +109,26 @@
 				<div class="container-fluid">
 					<div class="panel panel-headline">
 						<div class="panel-heading">
-							<h3 class="panel-title">Bienvenue sur MTV PKI</h3>
+							<h3 class="panel-title">Importer une Demande de Certificat (CSR)</h3>
 						</div>
 						<div class="panel-body">
-                            <?php
-                                if ($personne['admin'] == 1) {
-                                    ?>
-                                    <div class="row">
-                                        <h4>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;Notre PKI vous propose les fonctionnalités suivantes en tant qu'administrateur :
-                                        </h4>
-                                        <br>
-
-                                        <ul>
-                                            <li><i class="lnr lnr-download"></i><span>&nbsp; Importer une demande de certificat</span></a>
-                                            </li>
-                                            <li><i class="lnr lnr-list"></i><span>&nbsp; Lister (et vérifier) les demandes de certificat</span>
-                                            </li>
-                                            <li><i class="lnr lnr-pencil"></i><span>&nbsp; Signer les demandes de certificat</span>
-                                            </li>
-                                            <li><i class="lnr lnr-lock"></i><span>&nbsp; Lister (et télécharger) les certificats</span>
-                                            </li>
-                                            <li>
-                                                <i class="lnr lnr-trash"></i><span>&nbsp; Révoquer les certificats</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <?php
-                                } else {
-                                    ?>
-                                    <div class="row">
-                                        <h4>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;Notre PKI vous propose les fonctionnalités suivantes :
-                                        </h4>
-                                        <br>
-
-                                        <ul>
-                                            <li><i class="lnr lnr-download"></i><span>&nbsp; Importer une demande de certificat</span></a>
-                                            </li>
-                                            <li><i class="lnr lnr-list"></i><span>&nbsp; Lister vos demandes de certificat</span>
-                                            </li>
-                                            <li><i class="lnr lnr-lock"></i><span>&nbsp; Lister (et télécharger) vos certificats</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <?php
-                                }
-                            ?>
+							<div class="row">
+								<div class="col-md-6">
+                                    <form method="post" action="uploadCertif.php" enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            <input type="file" class="form-control" id="csrfile" name="file" required accept=".csr"/> <label for="csrfile"> *.csr uniquement </label>
+                                            <br>
+                                            <span class="form-control" >
+                                                <span>FQDN : </span>
+                                                <input type="text" name="fqdn" placeholder="exemple.fr" required>
+                                            </span>
+                                            <br>
+                                            <span class="col-md-9"></span>
+                                            <button type="submit" class="col-md-3"> Envoyer</button>
+                                        </div>
+                                    </form>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -204,6 +177,7 @@
         $(function() {
             bs_input_file();
         });
+
 	</script>
 </body>
 

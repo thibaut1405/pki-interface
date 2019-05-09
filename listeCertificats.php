@@ -38,18 +38,11 @@
         ));
         $personne = $pers->fetch();
         if ($personne['admin'] == 1) {
-            $cert = $bdd->prepare('SELECT path_certificate, nom, prenom, state_certificate, fqdn_certificate FROM certificates INNER JOIN personne ON personne.id = certificates.id_demandeur');
             $real_cert = $bdd->prepare('SELECT path_real_certificate, nom, prenom, state_real_certificate, fqdn_real_certificate FROM real_certificates INNER JOIN personne ON personne.id = real_certificates.id_demandeur');
 
             $real_cert->execute();
-            $cert->execute();
         } else {
-            $cert = $bdd->prepare('SELECT path_certificate, nom, prenom, state_certificate, fqdn_certificate FROM certificates INNER JOIN personne ON personne.id = certificates.id_demandeur WHERE id = :id');
             $real_cert = $bdd->prepare('SELECT path_real_certificate, nom, prenom, state_real_certificate, fqdn_real_certificate FROM real_certificates INNER JOIN personne ON personne.id = real_certificates.id_demandeur WHERE id = :id');
-
-            $cert->execute(array(
-                'id' => $_SESSION['id']
-            ));
             $real_cert->execute(array(
                 'id' => $_SESSION['id']
             ));
@@ -68,23 +61,23 @@
                 <div class="navbar-btn">
                     <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
                 </div>
-                <div id="navbar-menu">
-                    <ul class="nav navbar-nav navbar-right">
+				<div id="navbar-menu">
+					<ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                         <li><a><i class="lnr lnr-user"></i> <span><?php echo $personne['prenom'] . " " . $personne['nom']?></span></a></li>
                         </li>
-                        <li class="dropdown">
-                        <li><a href="deconnexion.php"><i class="lnr lnr-exit"></i> <span>Déconnexion</span></a></li>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+						<li class="dropdown">
+								<li><a href="deconnexion.php"><i class="lnr lnr-exit"></i> <span>Déconnexion</span></a></li>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</nav>
         <div id="sidebar-nav" class="sidebar">
             <div class="sidebar-scroll">
                 <nav>
                     <ul class="nav">
-                        <li><a href="index.php" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+                        <li><a href="index.php" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
                         <li><a href="importCSR.php" class=""><i class="lnr lnr-download"></i> <span>Importer CSR</span></a></li>
                         <li><a href="listeCSR.php" class=""><i class="lnr lnr-list"></i> <span>Lister CSR</span></a></li>
                         <?php if ($personne['admin'] == 1) {
@@ -93,7 +86,7 @@
                             <?php
                         }
                         ?>
-                        <li><a href="listeCertificats.php" class=""><i class="lnr lnr-lock"></i> <span>Lister Certificats</span></a></li>
+                        <li><a href="listeCertificats.php" class="active"><i class="lnr lnr-lock"></i> <span>Lister Certificats</span></a></li>
                         <?php if ($personne['admin'] == 1) {
                             ?>
                             <li><a href="revoquerCertificat.php" class=""><i class="lnr lnr-trash"></i> <span>Révoquer Certificat</span></a></li>
@@ -107,57 +100,67 @@
 		<div class="main">
 			<div class="main-content">
 				<div class="container-fluid">
-					<div class="panel panel-headline">
-						<div class="panel-heading">
-							<h3 class="panel-title">Bienvenue sur MTV PKI</h3>
-						</div>
-						<div class="panel-body">
-                            <?php
-                                if ($personne['admin'] == 1) {
-                                    ?>
-                                    <div class="row">
-                                        <h4>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;Notre PKI vous propose les fonctionnalités suivantes en tant qu'administrateur :
-                                        </h4>
-                                        <br>
+                    <div class="panel panel-headline">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Liste des Certificats</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="panel">
+                                    <div class="panel-body no-padding">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Nom du certificat</th>
+                                                <th>FQDN</th>
+                                                <th>Nom du détenteur</th>
+                                                <th>Prénom du détenteur</th>
+                                                <th>Statut</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php
+                                            while ($certifs = $real_cert->fetch()) {
+                                                ?>
+                                                <tr>
+                                                    <td class="col-md-3"><strong><?php echo $certifs['path_real_certificate'] ?></strong></td>
+                                                    <td class="col-md-2"><?php echo $certifs['fqdn_real_certificate']?></td>
+                                                    <td class="col-md-2"><?php echo $certifs['nom']?></td>
+                                                    <td class="col-md-3"><?php echo $certifs['prenom']?></td>
+                                                    <td class="col-md-1">
+                                                        <?php
+                                                        if ($certifs['state_real_certificate'] == 0) {
+                                                            echo "<span class='label label-success'>Valide</span>";
 
-                                        <ul>
-                                            <li><i class="lnr lnr-download"></i><span>&nbsp; Importer une demande de certificat</span></a>
-                                            </li>
-                                            <li><i class="lnr lnr-list"></i><span>&nbsp; Lister (et vérifier) les demandes de certificat</span>
-                                            </li>
-                                            <li><i class="lnr lnr-pencil"></i><span>&nbsp; Signer les demandes de certificat</span>
-                                            </li>
-                                            <li><i class="lnr lnr-lock"></i><span>&nbsp; Lister (et télécharger) les certificats</span>
-                                            </li>
-                                            <li>
-                                                <i class="lnr lnr-trash"></i><span>&nbsp; Révoquer les certificats</span>
-                                            </li>
-                                        </ul>
+                                                        } elseif ($certifs['state_real_certificate'] == true) {
+                                                            echo "<span class='label label-danger'>Révoqué</span>";
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td class="col-md-1">
+                                                        <?php
+                                                            if ($certifs['state_real_certificate'] == 0) {
+                                                        ?>
+                                                            <button>
+                                                                <a href="/root/pki/certs/<?php echo $certifs['fqdn_real_certificate']?>/<?php echo $certifs['fqdn_real_certificate']?>.crt">Télécharger</a>
+                                                            </button>
+                                                        <?php
+                                                            } elseif ($certifs['state_real_certificate'] == true) {
+                                                                echo "";
+                                                            }
+                                                        ?>
+                                                    </td>
+                                                </tr>
+                                            <?php } ?>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <?php
-                                } else {
-                                    ?>
-                                    <div class="row">
-                                        <h4>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;Notre PKI vous propose les fonctionnalités suivantes :
-                                        </h4>
-                                        <br>
-
-                                        <ul>
-                                            <li><i class="lnr lnr-download"></i><span>&nbsp; Importer une demande de certificat</span></a>
-                                            </li>
-                                            <li><i class="lnr lnr-list"></i><span>&nbsp; Lister vos demandes de certificat</span>
-                                            </li>
-                                            <li><i class="lnr lnr-lock"></i><span>&nbsp; Lister (et télécharger) vos certificats</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <?php
-                                }
-                            ?>
-						</div>
-					</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 				</div>
 			</div>
 		</div>
@@ -204,6 +207,7 @@
         $(function() {
             bs_input_file();
         });
+
 	</script>
 </body>
 
