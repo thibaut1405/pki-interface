@@ -2,7 +2,6 @@
 $fqdn = $_GET["fqdn"];
 $page = shell_exec("sudo -u root /root/pki/certs/$fqdn/checkCSR");
 
-
 include('check_connexion.php');
 
 ?>
@@ -152,4 +151,9 @@ if (empty($_SESSION['connected'])) {
 </body>
 
 </html>
+
+
+$page = shell_exec("sudo -u root /root/pki/certs/$fqdn/checkCSR");
+
+echo $page;
 

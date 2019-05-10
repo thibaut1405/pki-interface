@@ -22,6 +22,7 @@ $certif = $cert->fetch();
 $createCert = $bdd->prepare('INSERT INTO real_certificates(path_real_certificate, state_real_certificate, id_demandeur, fqdn_real_certificate ) VALUES (:path, :state, :idPersonne, :fqdn)');
 
 $createCert->execute(array(
+
     'path' => $certif['path_certificate'],
 
     'state' => 0,
@@ -31,5 +32,6 @@ $createCert->execute(array(
     'fqdn' => $fqdn
 ));
 
-
 echo "<script type='text/javascript'>document.location.replace('listeCSR.php');</script>";
+
+?>

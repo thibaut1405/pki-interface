@@ -5,7 +5,9 @@ $fqdn = $_GET["fqdn"];
 
 $certifRevok = $fqdn.".cer";
 
-//var_dump($certifRevok);
+
+var_dump($certifRevok);
+
 
 $page = shell_exec("sudo -u root /root/pki/revoke $certifRevok $fqdn");
 
@@ -16,5 +18,8 @@ $update_cert->execute(array(
     'fqdn' => $fqdn
 ));
 
-//var_dump($update_cert);
+
 echo "<script type='text/javascript'>document.location.replace('listeCertificats.php');</script>";
+
+var_dump($update_cert);
+

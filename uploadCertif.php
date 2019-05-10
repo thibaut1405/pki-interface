@@ -77,8 +77,6 @@ if (!isset($erreur)) //S'il n'y a pas d'erreur, on upload
     } else //Sinon (la fonction renvoie FALSE).
 
     {
-        var_dump($_FILES);
-
         echo 'Echec de l\'upload !';
 
         echo "<script type='text/javascript'>document.location.replace('importCSR.php');</script>";
