@@ -32,5 +32,6 @@ $createCert->execute(array(
     'fqdn' => $fqdn
 ));
 
+echo "<script type='text/javascript'>document.location.replace('listeCSR.php');</script>";
 
 ?>

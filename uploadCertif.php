@@ -23,12 +23,16 @@ if (!in_array($extension, $extensions)) //Si l'extension n'est pas dans le table
 
 {
     $erreur = 'Vous devez uploader un fichier de type csr';
+    echo '<script type="text/javascript">window.alert("'.$erreur.'");</script>';
+    echo "<script type='text/javascript'>document.location.replace('index.php');</script>";
 
 }
 
 if ($taille > $taille_maxi) {
 
     $erreur = 'Le fichier est trop gros...';
+    echo '<script type="text/javascript">window.alert("'.$erreur.'");</script>';
+    echo "<script type='text/javascript'>document.location.replace('index.php');</script>";
 
 }
 
@@ -65,16 +69,17 @@ if (!isset($erreur)) //S'il n'y a pas d'erreur, on upload
             'fqdn' => $_POST['fqdn']
         ));
 
-        echo 'Upload effectué avec succès !';
-
-
         $page =  shell_exec("sudo -u root /bin/bash /root/pki/csr '".$_POST['fqdn']."' '".$fichier."'");
+
+        echo "<script type='text/javascript'>document.location.replace('listeCSR.php');</script>";
+
+
     } else //Sinon (la fonction renvoie FALSE).
 
     {
         echo 'Echec de l\'upload !';
 
-
+        echo "<script type='text/javascript'>document.location.replace('importCSR.php');</script>";
 
 
     }

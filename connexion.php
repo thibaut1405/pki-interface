@@ -11,7 +11,8 @@
 
         <!-- Icon -->
         <div class="fadeIn first">
-           <h1>Connexion</h1>
+            <h2>MTV PKI</h2>
+            <h1>Connexion</h1>
         </div>
 
         <!-- Login Form -->
