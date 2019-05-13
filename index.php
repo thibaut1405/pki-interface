@@ -25,14 +25,17 @@ include('includes/connexion.php');
 
 <?php
 
+if (!isset($_SESSION)) {
+    session_start();
+}
 if (empty($_SESSION['connected'])) {
-
     $login = 0;
+    header('Location: connexion.php');
 
-} else {
+}  else {
 
     $login = 1;
-    $pers = $bdd->prepare('SELECT admin FROM personne WHERE id = :id ');
+    $pers = $bdd->prepare('SELECT admin, identifiant, nom, prenom  FROM personne WHERE id = :id ');
     $pers->execute(array(
         'id' => $_SESSION['id'],
     ));
