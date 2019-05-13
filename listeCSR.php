@@ -138,17 +138,9 @@
                                                             ?>
                                                         </td>
                                                         <td class="col-md-1">
-                                                            <?php
-                                                                if ($personne['admin'] == 1) {
-                                                                    ?>
-                                                                    <button>
-                                                                        <a href="verifyCSR.php?fqdn=<?php echo $lesCerts['fqdn_certificate'] ?>">Vérifier</a>
-                                                                    </button>
-                                                                    <?php
-                                                                } elseif ($personne['admin'] == 0) {
-                                                                    echo "";
-                                                                }
-                                                            ?>
+                                                            <button>
+                                                                <a href="verifyCSR.php?fqdn=<?php echo $lesCerts['fqdn_certificate'] ?>">Vérifier</a>
+                                                            </button>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
