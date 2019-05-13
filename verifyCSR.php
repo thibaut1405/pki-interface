@@ -152,8 +152,3 @@ if (empty($_SESSION['connected'])) {
 
 </html>
 
-
-$page = shell_exec("sudo -u root /root/pki/certs/$fqdn/checkCSR");
-
-echo $page;
-

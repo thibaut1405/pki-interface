@@ -144,7 +144,7 @@
                                                             if ($certifs['state_real_certificate'] == 0) {
                                                         ?>
                                                             <button>
-                                                                <a href="/root/pki/certs/<?php echo $certifs['fqdn_real_certificate']?>/<?php echo $certifs['fqdn_real_certificate']?>.crt">Télécharger</a>
+                                                                <a href="/var/www/html/certs/certs/<?php echo $certifs['fqdn_real_certificate']?>/<?php echo $certifs['fqdn_real_certificate']?>.crt">Télécharger</a>
                                                             </button>
                                                         <?php
                                                             } elseif ($certifs['state_real_certificate'] == true) {

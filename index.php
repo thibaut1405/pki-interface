@@ -24,14 +24,6 @@ include('includes/connexion.php');
 
 
 <?php
-    if (!isset($_SESSION)) {
-        session_start();
-    }
-
-
-    if (empty($_SESSION['connected'])) {
-        $login = 0;
-        header('Location: connexion.php');
 
 if (empty($_SESSION['connected'])) {
 
@@ -60,7 +52,7 @@ if (empty($_SESSION['connected'])) {
         $pers = $bdd->prepare('SELECT admin, identifiant, nom, prenom  FROM personne WHERE id = :id ');
         $pers->execute(array(
             'id' => $_SESSION['id'],
-
+        ));
         $cert->execute(array(
             'id' => $_SESSION['id']
         ));
@@ -69,6 +61,7 @@ if (empty($_SESSION['connected'])) {
         ));
     }
 }
+
 ?>
 
 
@@ -545,7 +538,6 @@ if (empty($_SESSION['connected'])) {
             animate: 800
         });
 
-	</script>
 
 
         var updateInterval = 3000; // in milliseconds
